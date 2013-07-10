@@ -1,11 +1,30 @@
-
 /*
-Tipue drop 3.0
-Copyright (c) 2013 Tipue
-Tipue drop is released under the MIT License
-http://www.tipue.com/drop
+---------------------------------------tipue-----------------------------------------
 */
 
+function getCelebArray() {
+	var tipuedrop_in = {
+        pages: []
+    };
+	tipuedrop_in = $.extend({}, celebs);
+	return tipuedrop_in;
+}
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function getCeleb(name) {
+	var array = getCelebArray();
+	for(var i=0;i<array.pages.length;i++){
+		if(array.pages[i].text === name){
+			return array.pages[i];
+		}
+	}
+}
 
 (function($) {
 

@@ -9,34 +9,34 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" type="text/css" href="css/example.css">
+		<link rel="stylesheet" type="text/css" href="css/FindEm.css">
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 		
 		<script type="text/javascript" src="js/database.js"></script>
 		<script type="text/javascript" src="js/databaseHelper.js"></script>
-		<link rel="stylesheet" type="text/css" href="js/FindEm.css">
 		<script src="js/jquery.bxslider.min.js"></script>
 
 
 	</head>
 <body>
-	<!-- company logo goes here -->
-	<div class="block" style="padding-top: 30px;">
-		<a href="http://www.tipue.com">
-			<img src="img/head.png" style="width: 76px; height: 42px;" alt="Tipue">
-		</a>
-	</div>
-
+	<br><br>
 	<!-- jquery carousel -->
 	<div class="slider">
  		<script type="text/javascript">
+		var celebs = getCelebArray();
 		$(document).ready(function(){
+			var htmlbuilder = "";
+			for(var i=0;i<celebs.pages.length;i++){
+				htmlbuilder = htmlbuilder + "\n<li><img src='" + celebs.pages[i].thumb + "' /></li>";
+			}	
+			$("ul[id$='bxslider']").html(htmlbuilder);
+			//alert(htmlbuilder);
 			$('.bxslider').bxSlider({
 				auto: true,
 				controls: false,
 				pager: false,
-				randomStart: true,
+				randomStart: false,
 				autoHover: true,
 				moveSlides: 3,
 				minSlides: 1,
@@ -47,23 +47,17 @@
 			});
 		});
 	</script>
-		<ul class="bxslider">
-		  <li><img src="img/carousel/apeterson_150x200.jpeg" /></li>
-		  <li><img src="img/carousel/bono_150x200.jpg" /></li>
-		  <li><img src="img/carousel/kchesney_150x200.jpg" /></li>
-		  <li><img src="img/carousel/ljames_150x200.jpg" /></li>
-		  <li><img src="img/carousel/mdamon_150x200.jpg" /></li>
-		  <li><img src="img/carousel/swhite_150x200.jpg" /></li>
-		  <li><img src="img/carousel/tmartinez_150x200.jpg" /></li>
-		  <li><img src="img/carousel/tswift_150x200.jpg" /></li>
+		<ul class="bxslider" id="bxslider">
+
 		</ul>
 	</div>
+	<br><br>
 	<!-- end jquery carousel -->
 
 	
 
 	<div class="block" style="padding-top: 21px;">
-		<h1>Find 'Em</h1>
+		<img src="img/HeadTitle.png" style="width:70%;height:70%;"/>
 
 		<div style="padding-top: 21px;">
 

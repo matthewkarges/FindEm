@@ -1,0 +1,119 @@
+<!DOCTYPE html5>
+<html>
+	<head>
+		<title>Find 'Em</title>
+		<link rel="stylesheet" type="text/css" href="template.css">
+		<link rel="stylesheet" type="text/css" href="tipuedrop.css">
+		<script src = "http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+		<script type = "text/javascript" src = "Scripts/tipuedrop_content.js"></script>
+		<script type = "text/javascript" src = "Scripts/tipuedrop.js"></script>	
+		<script type = "text/javascript" src = "Scripts/wiki2html.js"></script>
+		<script>
+			var celebName = getParameterByName("celeb");
+			var celeb = getCeleb(celebName);
+			var celebName = "Conan O'Brien";
+			var wikiTitle = "Conan_O'Brien";
+			var playlistID = "PLVL8S3lUHf0RsUjDWLkq7ZEMfNpnVU4dB";
+			var twitterHTML = "<a class=\"twitter-timeline\" href=\"https://twitter.com/ConanOBrien\" data-widget-id=\"353645665638809600\">Tweets by @ConanOBrien</a>\<script\>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+\"://platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");\</script\>";
+			var IMDBLink = "nm0005277";
+		</script>
+	</head>
+	<body>		
+		<div id = "Page">
+		<!--============================================Search Bar============================================-->
+		<!--===============================================Done===============================================-->
+			<div id = "SearchBar">
+				<div id = "Search Bar Text">
+					<input type = "text" id = "tipue_drop_input" autocomplete = "off">
+				</div>
+				<div id="tipue_drop_content"></div>
+			</div>
+			
+		<!--============================================Celebrity Header============================================-->
+		<!--===================================================Done=================================================-->
+			<div id = "CelebrityName">
+				<h1 id="nameHead"></h1>
+				<script>
+					document.getElementById("nameHead").innerHTML = celebName;
+				</script>
+			</div>
+			
+		<!--============================================Celebrity Bio============================================-->
+		<!--=============================================Finish This=============================================-->
+			<div id = "Bio">
+				<p id = "bioText"></p>
+				<script>
+					var wikiLink = "http://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&format=json&callback=?&titles=" + wikiTitle;
+					var pageInfo = "Test";
+					$.getJSON(wikiLink, function(data)
+						{
+							if(data && data.query && data.query.pages)
+							{
+								var pages = data.query.pages;
+							}
+							else
+							{
+								//Error handeling
+							}
+							console.log(pages);
+							for(var id in pages)
+							{
+								pageInfo = pages[id].revisions[0]['*'];
+								console.log(pageInfo);
+								//document.getElementById("bioText").innerHTML = pageInfo;
+								var array = pageInfo.split(" }}\n}}");
+								var bioInfo = array[array.length-1];
+								document.getElementById("bioText").innerHTML = bioInfo;
+							}
+						}
+					)
+				</script>				
+			</div>
+			
+		<!--======================Embedding=================================-->
+		<!--=====================Finish This================================-->
+			<div id = "Embedding">
+			
+			<!--===================Youtube=============================-->
+			<!--====================Done===============================-->
+				<div id = "Youtube"></div>
+				<script>
+					var iframe = "<iframe id=\"ytplayer\" type=\"text/html\" width=\"640\" height=\"360\" frameborder=\"0\" src=\"http://www.youtube.com/embed?loop=0&listType=playlist&list=" + playlistID + "\"></iframe>"
+					document.getElementById("Youtube").innerHTML = iframe;
+				</script>
+				
+			<!--====================Twitter=============================-->
+			<!--=====================Done===============================-->
+				
+				<div id = "Twitter"><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></div>
+				<script>
+					console.log(twitterHTML);
+					document.getElementById("Twitter").innerHTML = twitterHTML;
+				</script>
+				
+			<!--=====================IMDB=================================-->
+			<!--==================Finish This=============================-->
+				<div id = "IMDB">
+				</div>
+				<script>
+					var IMDBframe = "<iframe width = \"680\" height = \"370\" src = \"http://www.imdb.com/name/" + IMDBLink + "/#maindetails_center_bottom\" scrolling = \"no\" frameborder = \"0\" style = 'margin-top: 20px;'></iframe>"
+					console.log(IMDBframe);
+					document.getElementById("IMDB").innerHTML = IMDBframe;
+					//$('#KnownFor').load('http://imdb.com/name/nm0005277/');
+				</script>
+			
+			</div>		
+		</div>	
+	<!--========================Search Bar Script============================-->
+	<!--==============================Done===================================-->
+		<script>
+			$(document).ready
+			(
+				function() 
+				{
+					$('#tipue_drop_input').tipuedrop();
+				}
+			);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html5>
+<html>
+	<head>
+		<title>Find 'Em</title>
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" type="text/css" href="css/FindEm.css">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+		<script type="text/javascript" src="js/database.js"></script>
+		<script type="text/javascript" src="js/databaseHelper.js"></script>
+		<script src="js/jquery.bxslider.min.js"></script>
+		<script>
+			var QcelebName = getParameterByName("celeb");
+			var celeb = getCeleb(QcelebName);
+			var celebName = celeb.title;
+			var wikiTitle = celeb.title;
+			var playlistID = celeb.youtube;
+			var twitterHTML = celeb.twitter;
+			var iTunesCode = "<iframe src=\"http://widgets.itunes.apple.com/widget.html?c=us&brc=000000&blc=000000&trc=000000&tlc=000000&d=&t=&m=music&e=album&w=325&h=300&ids=562100121&wt=discovery&partnerId=&affiliate_id=\" frameborder=0 style=\"overflow-x:hidden;overflow-y:hidden;width:325px;height: 300px;border:0px\"></iframe>";
+		</script>
+	</head>
+	<body>		
+		<div id = "Page">
+		<!--============================================Search Bar============================================-->
+		<!--===============================================Done===============================================-->
+			<div id = "SearchBar">
+				<div id = "Search Bar Text">
+					<input type = "text" id = "tipue_drop_input" autocomplete = "off">
+				</div>
+				<div id="tipue_drop_content"></div>
+			</div>
+			
+		<!--============================================Celebrity Header============================================-->
+		<!--===================================================Done=================================================-->
+			<div id = "CelebrityName">
+				<h1 id="nameHead"></h1>
+				<script>
+					document.getElementById("nameHead").innerHTML = celebName;
+				</script>
+			</div>
+			
+		<!--============================================Celebrity Bio============================================-->
+		<!--=============================================Finish This=============================================-->
+			<div id = "Bio">
+				<p id = "bioText"></p>
+				<script>
+					var wikiLink = "http://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&format=json&callback=?&titles=" + wikiTitle;
+					var pageInfo = "Test";
+					$.getJSON(wikiLink, function(data)
+						{
+							if(data && data.query && data.query.pages)
+							{
+								var pages = data.query.pages;
+							}
+							else
+							{
+								//Error handeling
+							}
+							console.log(pages);
+							for(var id in pages)
+							{
+								pageInfo = pages[id].revisions[0]['*'];
+								console.log(pageInfo);
+								//document.getElementById("bioText").innerHTML = pageInfo;
+								var array = pageInfo.split(" }}\n}}");
+								var bioInfo = array[array.length-1];
+								document.getElementById("bioText").innerHTML = bioInfo;
+							}
+						}
+					)
+				</script>				
+			</div>
+			
+		<!--======================Embedding=================================-->
+		<!--=====================Finish This================================-->
+			<div id = "Embedding">
+			
+			<!--===================Youtube=============================-->
+			<!--====================Done===============================-->
+				<div id = "Youtube"></div>
+				<script>
+					var iframe = "<iframe id=\"ytplayer\" type=\"text/html\" width=\"640\" height=\"360\" frameborder=\"0\" src=\"http://www.youtube.com/embed?loop=0&listType=playlist&list=" + playlistID + "\"></iframe>"
+					document.getElementById("Youtube").innerHTML = iframe;
+				</script>
+				
+			<!--====================Twitter=============================-->
+			<!--=====================Done===============================-->
+				
+				<div id = "Twitter"><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></div>
+				<script>
+					console.log(twitterHTML);
+					document.getElementById("Twitter").innerHTML = twitterHTML;
+				</script>
+				
+			<!--====================iTunes=================================-->
+			<!--==================Finish This=============================-->
+				<div id = "iTunes">
+				</div>	
+				<script>
+					document.getElementById("iTunes").innerHTML = iTunesCode;
+				</script>
+			</div>		
+		</div>	
+	<!--========================Search Bar Script============================-->
+	<!--==============================Done===================================-->
+		<script>
+			$(document).ready
+			(
+				function() 
+				{
+					$('#tipue_drop_input').tipuedrop();
+				}
+			);
+		</script>
+	</body>
+</html>
